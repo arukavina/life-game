@@ -25,7 +25,7 @@ import gif_maker as gm
 np.set_printoptions(threshold=70)
 
 # Constants
-GRID_SIZE = 32  # Size of grid
+GRID_SIZE = 16  # Size of grid
 CELL_SIZE = 30  # Each cell's pixel size
 WINDOW_SIZE = GRID_SIZE * CELL_SIZE  # 640x640 window
 TOP_SECTION_HEIGHT = 60  # Extra space for the top section (title bar)
@@ -102,14 +102,6 @@ def get_cell_from_mouse(pos):
     return x // CELL_SIZE, (y - TOP_SECTION_HEIGHT) // CELL_SIZE
 
 
-# Function to clear a cell (reset it to background)
-def clear_cell(cell):
-    # Create the rectangle for the cell to be cleared
-    rect = pygame.Rect(cell[0] * CELL_SIZE, (cell[1] * CELL_SIZE) + TOP_SECTION_HEIGHT, CELL_SIZE, CELL_SIZE)
-    # Reset the cell to the background image and draw the grid border on top
-    screen.blit(background, rect, rect)  # Restore the cell's background
-
-
 # Function to draw a cell
 def draw_cell(cell, color):
     rect = pygame.Rect(cell[0] * CELL_SIZE, (cell[1] * CELL_SIZE) + TOP_SECTION_HEIGHT, CELL_SIZE, CELL_SIZE)
@@ -167,11 +159,9 @@ def main():
 
             pygame.image.save(screen, f"{frames_directory}/frame_{generation}.png")
 
-            for cell in current_generation:
-                clear_cell(cell)
-
+            screen.blit(background, (0, TOP_SECTION_HEIGHT))
             draw_grid()
-            pygame.display.update()
+            pygame.display.flip()
 
             next_generation = compute_next_generation(current_generation)
 
