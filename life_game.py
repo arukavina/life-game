@@ -54,9 +54,8 @@ background = pygame.image.load(BG_IMAGE)
 background = pygame.transform.scale(background, (WINDOW_SIZE, WINDOW_SIZE))
 
 frames_directory = "static/media/frames"
-# Create a directory to store frames
 
-# remove old account directory
+# Re-Create a directory to store frames
 shutil.rmtree(frames_directory, ignore_errors=True)
 os.makedirs(frames_directory)
 
@@ -107,23 +106,14 @@ def get_cell_from_mouse(pos):
 def clear_cell(cell):
     # Create the rectangle for the cell to be cleared
     rect = pygame.Rect(cell[0] * CELL_SIZE, (cell[1] * CELL_SIZE) + TOP_SECTION_HEIGHT, CELL_SIZE, CELL_SIZE)
-
     # Reset the cell to the background image and draw the grid border on top
     screen.blit(background, rect, rect)  # Restore the cell's background
-    # pygame.draw.rect(screen, BLACK, rect, 1)  # Redraw the grid border
-    # Redraw the entire grid to ensure consistent lines
-    draw_grid()
-
-    # Update only the cleared cell on the screen
-    pygame.display.update(rect)
 
 
-# Function to draw a cell in red
+# Function to draw a cell
 def draw_cell(cell, color):
     rect = pygame.Rect(cell[0] * CELL_SIZE, (cell[1] * CELL_SIZE) + TOP_SECTION_HEIGHT, CELL_SIZE, CELL_SIZE)
     pygame.draw.rect(screen, color, rect)
-    # Update only the cleared cell on the screen
-    pygame.display.update(rect)
 
 
 # Main Game Loop
@@ -163,6 +153,7 @@ def main():
                         current_generation.add(cell)
                         draw_top_section(generation, elapsed_time, len(current_generation), blinking, frozen, empty)
                         draw_cell(cell, RED)
+                        pygame.display.update()
                 if len(current_generation) == NUMBER_OF_INITIAL_CELLS:
                     start_time = time.time()
                     game_started = True
@@ -178,6 +169,9 @@ def main():
 
             for cell in current_generation:
                 clear_cell(cell)
+
+            draw_grid()
+            pygame.display.update()
 
             next_generation = compute_next_generation(current_generation)
 
@@ -205,13 +199,15 @@ def main():
             for cell in next_generation:
                 draw_cell(cell, RED)
 
+            pygame.display.update()
+
             # Update previous generation
             previous_generation = current_generation
             current_generation = next_generation
 
             generation += 1
 
-        clock.tick(20)
+        clock.tick(35)
 
     pygame.image.save(screen, f"{frames_directory}/frame_{generation}.png")
     gm.make_gif(frames_directory, 'static/media')

@@ -157,4 +157,5 @@ cython_debug/
 # PyCharm
 .idea/
 
-
+# Own
+static/media/frames

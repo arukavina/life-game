@@ -15,7 +15,6 @@ def make_gif(frames_directory, _dir):
 
     # Get the list of frame files
     frame_files = sort_filenames([f for f in os.listdir(frames_directory) if f.endswith('.png')])
-    print(frame_files)
 
     # Loop through each frame file and append it to the frames list
     for file in frame_files:
