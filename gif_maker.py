@@ -1,13 +1,21 @@
-import imageio
+import imageio.v2 as imageio
 import os
+import re
 
 
-def make_gif(frames_directory):
+def sort_filenames(files):
+    # Extract the numeric part from each file and use it for sorting
+    sorted_files = sorted(files, key=lambda x: int(re.findall(r'\d+', x)[0]))
+    return sorted_files
+
+
+def make_gif(frames_directory, _dir):
     # Create a list to hold the frames
     frames = []
 
     # Get the list of frame files
-    frame_files = sorted([f for f in os.listdir(frames_directory) if f.endswith('.png')])
+    frame_files = sort_filenames([f for f in os.listdir(frames_directory) if f.endswith('.png')])
+    print(frame_files)
 
     # Loop through each frame file and append it to the frames list
     for file in frame_files:
@@ -15,4 +23,4 @@ def make_gif(frames_directory):
         frames.append(imageio.imread(frame_path))
 
     # Save the frames as a GIF
-    imageio.mimsave("game_animation.gif", frames, duration=0.1)
+    imageio.mimsave(f'{_dir}/gol.gif', frames, duration=0.1)
