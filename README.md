@@ -1,6 +1,6 @@
 # Life-Game Simulation
 
-![Life Game Simulation](https://github.com/arukavina/life-game/static/media/gol.jpg)
+![Life Game Simulation](https://raw.githubusercontent.com/arukavina/life-game/refs/heads/main/static/media/gol.png)
 
 This is a Python-based implementation of Conway's Game of Life, built using **Pygame**. The simulation runs an interactive version of the Life-Game, complete with a generation counter, time elapsed, and logic to detect when the generations stabilize or repeat.
 
@@ -15,7 +15,7 @@ This is a Python-based implementation of Conway's Game of Life, built using **Py
 
 Check out a preview of the game in action!
 
-![Life Game Simulation](https://github.com/arukavina/life-game/static/media/gol.gif)
+![Life Game Simulation](https://raw.githubusercontent.com/arukavina/life-game/refs/heads/main/static/media/gol.gif)
 
 ## Requirements
 
